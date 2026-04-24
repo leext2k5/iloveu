@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* MÀN HÌNH KHÓA */
+#lockScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000000cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  z-index: 10;
+}
+
+/* THIỆP TO HƠN + RESPONSIVE */
+.card {
+  width: min(90vw, 500px);   /* tối đa 500px */
+  height: min(80vh, 650px);  /* cao hơn */
+  perspective: 1200px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card.open .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  backface-visibility: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.card-front {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+
+.card-back {
+  background: #fff0f5;
+  transform: rotateY(180deg);
+  padding: 25px;
+  text-align: center;
+  overflow: auto;
+}
+
+img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+p {
+  font-size: 18px;
+}
+
+/* NÚT */
+button {
+  margin: 5px;
+  padding: 12px 18px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* TIM BAY */
+.heart {
+  position: absolute;
+  color: red;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="lockScreen">
+  <h2>🔒 Nhập mật khẩu để mở thiệp</h2>
+  <input type="password" id="password">
+  <button onclick="checkPass()">Mở 💖</button>
+</div>
+
+<div class="card" onclick="openCard()">
+  <div class="card-inner">
+    
+    <div class="card-front">
+      💌 Bấm để mở thiệp
+    </div>
+
+    <div class="card-back">
+      <img src="https://picsum.photos/500/300">
+
+      <h2 contenteditable="true">Chúc mừng sinh nhật em 💖</h2>
+
+      <p contenteditable="true">
+        Chúc em luôn vui vẻ, hạnh phúc và mãi ở bên anh ❤️
+      </p>
+
+      <p contenteditable="true">- Người yêu của em -</p>
+
+      <div>
+        <button onclick="playMusic(event)">▶️ Phát</button>
+        <button onclick="pauseMusic(event)">⏸️ Dừng</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+function checkPass() {
+  const pass = document.getElementById("password").value;
+  if(pass === "1234") {
+    document.getElementById("lockScreen").style.display = "none";
+  } else {
+    alert("Sai mật khẩu rồi 😢");
+  }
+}
+
+function openCard() {
+  document.querySelector(".card").classList.toggle("open");
+}
+
+function playMusic(e) {
+  e.stopPropagation();
+  document.getElementById("music").play();
+}
+
+function pauseMusic(e) {
+  e.stopPropagation();
+  document.getElementById("music").pause();
+}
+
+/* TIM BAY */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (20 + Math.random() * 30) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 5000);
+}, 300);
+</script>
+
+</body>
+</html>
